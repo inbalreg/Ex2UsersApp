@@ -6,9 +6,17 @@
     xmlns:local="clr-namespace:LoginBaseApp.Views"
     Title="LoginBaseApp">
 
-    <ShellContent
+    <!--
+        ShellContent
         Title="Home"
         ContentTemplate="{DataTemplate local:LoginPage}"
+        Route="MainPage" /
+    -->
+
+
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate local:RegistrationPage}"
         Route="MainPage" />
 
 </Shell>

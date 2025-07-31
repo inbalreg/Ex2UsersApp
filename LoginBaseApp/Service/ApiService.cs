@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LoginBaseApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Json;
@@ -33,5 +34,25 @@ namespace LoginBaseApp.Service
 			// לשרת שיאמת את הפרטים ויחזיר תשובה בהתאם.
 			return true;
 		}
-	}
+
+        public bool Register(string username, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool ILoginService.deleteUserByUsername(string username)
+        {
+            throw new NotImplementedException();
+        }
+
+        User? ILoginService.getUserByUsername(string username)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool ILoginService.Register(string name, string username, string password, string email, string phoneNum, string date)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

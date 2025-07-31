@@ -42,7 +42,8 @@ namespace LoginBaseApp.ViewModels
 		/// </summary>
 		public string? Password
 		{
-			get => _password;
+			get { return _password; }
+				//=> _password;
 			set
 			{
 				if (_password != value)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LoginBaseApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,5 +20,32 @@ namespace LoginBaseApp.Service
 		/// <param name="password">סיסמת המשתמש.</param>
 		/// <returns>מחזירה אמת (true) אם ההתחברות הצליחה, אחרת שקר (false).</returns>
 		public bool Login(string username, string password);
-	}
+
+		/// <summary>
+		/// Registers a new user with the specified username and password.
+		/// </summary>
+		/// <param name="username">The username for the new user. Cannot be null or empty.</param>
+		/// <param name="password">The password for the new user. Cannot be null or empty.</param>
+		/// <returns><see langword="true"/> if the registration is successful; otherwise, <see langword="false"/>.</returns>
+		public bool Register(string name, string username, string password, string email, string phoneNum, string date);
+
+        /// <summary>
+        /// Retrieves a user by their username.
+        /// </summary>
+        /// <remarks>This method performs a case-sensitive search for the specified username. Ensure that the username
+        /// provided matches the exact case of the stored username.</remarks>
+        /// <param name="username">The username of the user to retrieve. Cannot be null or empty.</param>
+        /// <returns>The <see cref="User"/> object associated with the specified username, or <see langword="null"/> if no user is
+        /// found.</returns>
+        public User? getUserByUsername(string username);
+
+		/// <summary>
+		/// Deletes a user from the system based on their username.
+		/// </summary>
+		/// <remarks>This method attempts to remove the user associated with the specified username.  If no user with
+		/// the given username exists, the method returns <see langword="false"/>.</remarks>
+		/// <param name="username">The username of the user to be deleted. This value cannot be null or empty.</param>
+		/// <returns><see langword="true"/> if the user was successfully deleted; otherwise, <see langword="false"/>.</returns>
+		public bool deleteUserByUsername(string username);
+    }
 }
