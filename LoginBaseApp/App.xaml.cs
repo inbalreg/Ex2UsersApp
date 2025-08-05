@@ -6,7 +6,8 @@ namespace LoginBaseApp
     public partial class App : Application
     {
         Page firstpage;
-		public App(RegistrationPage page)//LoginPage page)
+		public App(RegistrationPage page)
+                   //LoginPage page)
         {       
             InitializeComponent();
             this.firstpage = page;

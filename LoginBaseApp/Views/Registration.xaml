@@ -6,7 +6,7 @@
     xmlns:view="clr-namespace:LoginBaseApp.Views"
     xmlns:viewmodels="clr-namespace:LoginBaseApp.ViewModels"
     Title="RegistrationPage"
-    x:DataType="viewmodels:LoginPageViewModel"
+    x:DataType="viewmodels:RegistrationPageViewModel"
     FlowDirection="RightToLeft">
 
     <ContentPage.Background>
@@ -31,6 +31,16 @@
                     Text="הרשמה"
                     TextColor="Snow"
                     VerticalOptions="Center" />
+
+
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="32"
+                    HorizontalOptions="Center"
+                    IsVisible="{Binding MessageIsVisible}"
+                    Text="{Binding UserMessage}"
+                    TextColor="{Binding MessageColor}" />
+
                 <Image
                     Aspect="Center"
                     HeightRequest="48"
@@ -47,8 +57,8 @@
                 <Entry
                     FontSize="18"
                     Placeholder="שם פרטי"
-                    Text="{Binding UserName}"
-                    TextColor="Wheat" />
+                    Text="{Binding Name}"
+                    TextColor="Black" />
             </Border>
 
             <!--  שם משתמש  -->
@@ -61,7 +71,7 @@
                     FontSize="18"
                     Placeholder="שם משתמש"
                     Text="{Binding UserName}"
-                    TextColor="Wheat" />
+                    TextColor="Black" />
             </Border>
 
             <!--  סיסמה עם כפתור צפייה  -->
@@ -79,7 +89,7 @@
                         IsPassword="{Binding IsPassword}"
                         Placeholder="סיסמה"
                         Text="{Binding Password}"
-                        TextColor="Wheat"
+                        TextColor="Black"
                         VerticalOptions="Center" />
                     <Button
                         Margin="5,0,0,0"
@@ -90,7 +100,7 @@
                         FontSize="24"
                         HorizontalOptions="End"
                         Text="{Binding ShowPasswordIcon}"
-                        TextColor="White"
+                        TextColor="Black"
                         VerticalOptions="Center" />
                 </Grid>
             </Border>
@@ -104,7 +114,7 @@
                     FontSize="18"
                     Placeholder="כתובת מייל"
                     Text="{Binding Email}"
-                    TextColor="Wheat" />
+                    TextColor="Black" />
             </Border>
 
             <!--  מספר טלפון  -->
@@ -117,7 +127,7 @@
                     FontSize="18"
                     Placeholder="מספר טלפון"
                     Text="{Binding PhoneNum}"
-                    TextColor="Wheat" />
+                    TextColor="Black" />
             </Border>
 
             <Border
@@ -125,52 +135,59 @@
                 Stroke="#ccc"
                 StrokeShape="RoundRectangle 8"
                 StrokeThickness="1">
-                <HorizontalStackLayout>
-                    <Label
-                        FontAttributes="Bold"
-                        FontSize="32"
-                        HorizontalOptions="Center"
-                        Text="תאריך לידה"
-                        TextColor="Snow" />
-                    <DatePicker
-                        x:Name="myDatePicker"
-                        Date="{Binding SelectedDate, Mode=TwoWay}"
-                        FontSize="18"
-                        TextColor="Wheat" />
-                    <Label
-                        FontAttributes="Bold"
-                        FontSize="32"
-                        HorizontalOptions="Center"
-                        Text="{Binding Age}"
-                        TextColor="Snow" />
-                    <Label FontSize="18" Text="{Binding SelectedDate, StringFormat='Selected: {0:dd/MM/yyyy}'}" />
-                </HorizontalStackLayout>
 
+                <FlexLayout
+                    AlignItems="Center"
+                    Direction="Row"
+                    JustifyContent="SpaceBetween">
+                    <HorizontalStackLayout Spacing="10">
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="32"
+                            HorizontalOptions="Center"
+                            Text="תאריך לידה"
+                            TextColor="Black"
+                            VerticalOptions="Center" />
+                        <DatePicker
+                            x:Name="myDatePicker"
+                            Date="{Binding SelectedDate, Mode=TwoWay}"
+                            FontSize="32"
+                            TextColor="Black" />
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout>
+                        <Label
+                            Padding="30"
+                            FontAttributes="Bold"
+                            FontSize="32"
+                            HorizontalOptions="Center"
+                            Text="{Binding AgeStr, Mode=TwoWay}"
+                            TextColor="Black" />
+
+
+                        <Label
+                            FontSize="32"
+                            HorizontalOptions="Center"
+                            Text="{Binding SelectedDate, Mode=OneWay, StringFormat='Selected: {0:dd/MM/yyyy}     '}"
+                            VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </FlexLayout>
             </Border>
-
-
-            <Label
-                FontAttributes="Bold"
-                FontSize="32"
-                HorizontalOptions="Center"
-                Text="{Binding errorMessage}"
-                TextColor="Snow" />
 
             <!--  כפתור כניסה  -->
             <Button
-                Command="{Binding LoginCommand}"
+                Command="{Binding RegisterCommand}"
                 CornerRadius="8"
                 FontSize="18"
                 HeightRequest="50"
                 Text="חיבור"
                 TextColor="White" />
-            <!--  שגיאה  -->
+            <!--  שגיאה >
             <Label
                 FontSize="45"
                 HorizontalTextAlignment="Center"
                 IsVisible="{Binding MessageIsVisible}"
-                Text="{Binding LoginMessage}"
-                TextColor="{Binding MessageColor}" />
+                Text="{Binding UserMessage2}"
+                TextColor="{Binding MessageColor}" /-->
 
         </VerticalStackLayout>
     </ScrollView>

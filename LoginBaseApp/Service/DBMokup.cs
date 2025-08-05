@@ -20,9 +20,9 @@ namespace LoginBaseApp.Service
 		/// </summary>
 		public DBMokup()
 		{
-			users.Add(new Models.User { Username = "admin", Password = "admin" });
-			users.Add(new Models.User { Username = "user1", Password = "password1" });
-			users.Add(new Models.User { Username = "user2", Password = "password2" });
+			users.Add(new Models.User("admin", "admin1", "ad1",  "adminMail1", "12376543", new DateTime(1909, 5, 15)));// Username = "admin", Password = "admin", Name = "ad", PhoneNum = "123", Email = "abc", BirthDate = DateTime.Now });
+			users.Add(new Models.User ( "user1", "password1", "us1",  "usMail2", "12376543", new DateTime(1980, 9, 15)));
+			users.Add(new Models.User ( "user2", "password2", "us2", "myMail3", "123", new DateTime(2000, 5, 15)  ));//Username = "user2", Password = "password2", Name = "us2", PhoneNum = "123",BirthDate = DateTime.Now });
 		}
 
 		/// <summary>
@@ -39,32 +39,36 @@ namespace LoginBaseApp.Service
 			return user != null;
 		}
 
-        public bool Register(string name, string username, string password, string email, string phoneNum, string date)
+        public bool Register(string name, string username, string password, string email, string phoneNum, DateTime date)
         {
             try
             {
-               User newUser = new User
-				{
-					Name = name,
-					Username = username,
-					Password = password,
-					Email = email,
-					PhoneNum = phoneNum,
-					//Date = date
-				};
-				// בדיקה אם המשתמש כבר קיים
-				if (users.Any(u => u.Username == username))
-				{
-					throw new ArgumentException("User already exists with this username.", nameof(username));
-                    //return false; // משתמש קיים, רישום נכשל
-                }
+					var newUser = new User
+					{
+
+						Name = name,
+						Username = username,
+						Password = password,
+						Email = email,
+						PhoneNum = phoneNum,
+						BirthDate = date
+					};
+					// בדיקה אם המשתמש כבר קיים
+					if (users.Any(u => u.Username == username))
+					{
+						throw new ArgumentException("User already exists with this username.", nameof(username));
+						//return false; // משתמש קיים, רישום נכשל
+					}
+
 				// הוספת המשתמש לרשימה
 				users.Add(newUser);
 				return true; // רישום הצליח
             }
             catch (Exception ex)
             {
-                return false; // Add a return statement in catch block
+                Console.WriteLine(ex.Message);
+				throw new ArgumentException(ex.Message);
+				//return false; // Add a return statement in catch block
             }
         }
 

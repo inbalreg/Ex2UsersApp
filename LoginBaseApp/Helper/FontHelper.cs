@@ -13,9 +13,9 @@ namespace LoginBaseApp.Helper
 		/// </summary>
 		public const string OPEN_EYE_ICON = "\ue8f5";
 
-		/// <summary>
-		/// קוד היוניקוד עבור אייקון של עין סגורה (להסתרת סיסמה).
-		/// </summary>
-		public const string CLOSED_EYE_ICON = "\ue8f4";
+        /// <summary>
+        /// קוד היוניקוד עבור אייקון של עין סגורה (להסתרת סיסמה).
+        /// </summary>
+        public const string CLOSED_EYE_ICON = "\ue8f4";
 	}
 }

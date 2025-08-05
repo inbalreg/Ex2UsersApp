@@ -20,5 +20,15 @@ namespace LoginBaseApp.Helper
 		/// הודעת שגיאה שתוצג במקרה של שם משתמש או סיסמה לא נכונים.
 		/// </summary>
 		public const string LoginErrorMessage = "שם משתמש וסיסמה לא תקינים";
-	}
+
+        /// <summary>
+        /// הודעה שתוצג לאחר התחברות מוצלחת.
+        /// </summary>
+        public const string RegisteredMessage = "נרשמת בהצלחה!";
+
+        /// <summary>
+        /// הודעה שתוצג לאחר התחברות מוצלחת.
+        /// </summary>
+        public const string RegisterErrorMessage = "בדוק שוב את פרטי המשתמש";
+    }
 }

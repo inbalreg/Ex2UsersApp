@@ -50,9 +50,11 @@ namespace LoginBaseApp.Service
             throw new NotImplementedException();
         }
 
-        bool ILoginService.Register(string name, string username, string password, string email, string phoneNum, string date)
+        bool ILoginService.Register(string name, string username, string password, string email, string phoneNum, DateTime date)
         {
             throw new NotImplementedException();
         }
+
+        
     }
 }

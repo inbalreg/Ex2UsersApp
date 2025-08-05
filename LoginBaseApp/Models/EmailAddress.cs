@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LoginBaseApp.Models
 {
-    internal class EmailAddress
+    public class EmailAddress
     {
         private string email;
         public string Email
@@ -27,6 +27,11 @@ namespace LoginBaseApp.Models
         public EmailAddress(string email)
         {
             Email = email; // Use the property setter to validate and assign
+        }
+
+        public static implicit operator string(EmailAddress v)
+        {
+            throw new NotImplementedException();
         }
     }
 }

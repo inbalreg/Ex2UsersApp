@@ -20,11 +20,13 @@ namespace LoginBaseApp.ViewModels
             db = loginService;
             // אתחול הפקודות והגדרת ערכים ראשוניים
             ShowPasswordCommand = new Command(TogglePasswordVisiblity);
-            LoginCommand = new Command(Login, CanLogin);
+            RegisterCommand = new Command(Register, CanRegister);
             ShowPasswordIcon = FontHelper.CLOSED_EYE_ICON; // הגדרת אייקון ברירת מחדל
             IsPassword = true; // הגדרת שדה הסיסמה כמוסתר כברירת מחדל
-
-            _date = DateTime.Today;
+            UserMessage = "TEST!!!";
+            MessageIsVisible = false;
+            SelectedDate = new DateTime(2000, 1, 1);
+            errorMessage = "Test Error Message";
         }
 
         private string? _userName;
@@ -32,7 +34,7 @@ namespace LoginBaseApp.ViewModels
         private string? _name;
         private string? _email;
         private string? _phoneNum;
-        private DateTime? _date;
+        private DateTime _date;
 
 
         /// <summary>
@@ -43,11 +45,19 @@ namespace LoginBaseApp.ViewModels
             get => _userName;
             set
             {
-                if (_userName != value)
+                if (_userName != value && _userName != null)
                 {
+                    if (_userName.Contains(" "))
+                    {
+                        throw new ArgumentException("Username cannot contain space!");
+                    }
+                    if (Char.IsDigit( _userName.ToCharArray()[0]))
+                    {
+                        throw new ArgumentException("Username cannot start with a digit!");
+                    }
                     _userName = value;
                     OnPropertyChanged(); // מודיע ל-UI על שינוי כדי לעדכן את התצוגה
-                    (LoginCommand as Command)?.ChangeCanExecute(); // בודק מחדש אם ניתן להפעיל את כפתור ההתחברות
+                    (RegisterCommand as Command)?.ChangeCanExecute(); // בודק מחדש אם ניתן להפעיל את כפתור ההתחברות
                 }
             }
         }
@@ -64,7 +74,7 @@ namespace LoginBaseApp.ViewModels
                 {
                     _password = value;
                     OnPropertyChanged(); // מודיע ל-UI על שינוי
-                    (LoginCommand as Command)?.ChangeCanExecute(); // בודק מחדש אם ניתן להפעיל את כפתור ההתחברות
+                    (RegisterCommand as Command)?.ChangeCanExecute(); // בודק מחדש אם ניתן להפעיל את כפתור ההתחברות
                 }
             }
         }
@@ -106,28 +116,62 @@ namespace LoginBaseApp.ViewModels
             set {
                     if (_date != value)
                     {
-                        _date = value;
+                        _date = (DateTime)value;
                         OnPropertyChanged();
-                    }
+                        OnPropertyChanged(nameof(Age));
+                        OnPropertyChanged(nameof(AgeStr));
+                        Console.WriteLine(Age);
+                    Age = null;
+                    AgeStr = "----";
+                }
                 }
             }
 
-    public event PropertyChangedEventHandler PropertyChanged;
+    //public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
+    //    protected void OnPropertyChanged([CallerMemberName] string name = null)
+    //    {
+    //        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    //    }
+
+        private string? ageStr;
+        public string? AgeStr
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            get => ageStr;
+            set { 
+                ageStr = "   Age:  " + Age + "   ";
+                OnPropertyChanged();
+            }
         }
 
-        public int Age
+        private int? age;
+        public int? Age
         {
-            get {
-                DateTime currentDate = DateTime.Today;
-                DateTime? selectedDate = _date;
-                TimeSpan ts = selectedDate - currentDate;
-                return (TimeSpan)(selectedDate - currentDate). Days;
+            get => age;
+
+            set
+            {
+
+                //if (_date == null)
+                //    return null;
+                
+                DateTime today = DateTime.Today;
+                age = today.Year - _date.Year;
+
+                // אם יום ההולדת עוד לא הגיע השנה – הפחת שנה אחת
+                if (_date.Month > today.Month || (_date.Month == today.Month && _date.Day > today.Day)) 
+                    age--;
+                if (age < 18)
+                    throw new ArgumentException("Cannot register a user under 18!");
+                OnPropertyChanged();
             }
-        } 
+               
+            //DateTime currentDate = DateTime.Today;
+            //DateTime? selectedDate = _date;
+            //TimeSpan? ts = selectedDate - currentDate;
+            //return ((TimeSpan?)(selectedDate - currentDate))?.Days / 365;
+        }
+        
 
         public string? PhoneNum
         {
@@ -171,6 +215,22 @@ namespace LoginBaseApp.ViewModels
                 }
             }
         }
+
+        private string errorMessage;
+
+        public string ErrorMessage
+        {
+            get { return errorMessage; }
+            set 
+            { 
+                if(errorMessage != value)
+                {
+                    errorMessage = value;
+                }
+                OnPropertyChanged();
+            }
+        }
+
 
         private Color? messageColor;
         /// <summary>
@@ -223,18 +283,18 @@ namespace LoginBaseApp.ViewModels
             }
         }
 
-        private string? loginMessage;
+        private string? userMessage;
         /// <summary>
         /// טקסט הודעת המשוב שתוצג למשתמש לאחר ניסיון התחברות.
         /// </summary>
-        public string? LoginMessage
+        public string? UserMessage
         {
-            get => loginMessage;
+            get => userMessage;
             set
             {
-                if (loginMessage != value)
+                if (userMessage != value)
                 {
-                    loginMessage = value;
+                    userMessage = value;
                     OnPropertyChanged();
                 }
             }
@@ -245,7 +305,7 @@ namespace LoginBaseApp.ViewModels
         /// תנאי הקובע אם ניתן להפעיל את פקודת ההתחברות.
         /// </summary>
         /// <returns>אמת אם גם שם המשתמש וגם הסיסמה אינם ריקים.</returns>
-        public bool CanLogin()
+        public bool CanRegister()
         {
             return (!string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(Password));
         }
@@ -261,7 +321,7 @@ namespace LoginBaseApp.ViewModels
         /// <summary>
         /// פקודה לביצוע תהליך ההתחברות.
         /// </summary>
-        public ICommand LoginCommand
+        public ICommand RegisterCommand
         {
             get;
         }
@@ -281,26 +341,41 @@ namespace LoginBaseApp.ViewModels
         /// <summary>
         /// מבצע את לוגיקת ההתחברות.
         /// </summary>
-        private void Login()
+        private void Register()
         {
             IsBusy = true; // מסמן שהאפליקציה בתהליך (להצגת מחוון טעינה)
             MessageIsVisible = true; // מציג את אזור הודעת המשוב
+            try
+            {
 
-            // קורא לשירות ההתחברות עם הפרטים שהוזנו
-            if (db.Login(UserName!, Password!))
-            {
-                // במקרה של הצלחה
-                LoginMessage = AppMessages.LoginMessage;
-                MessageColor = Colors.Green;
-                // כאן ניתן להוסיף ניווט לדף הבא
+                // קורא לשירות ההתחברות עם הפרטים שהוזנו
+                if (db.Register(Name!, UserName!, Password!, Email!, PhoneNum!, (DateTime)SelectedDate))
+                {
+                    // במקרה של הצלחה
+                    MessageIsVisible = true;
+                    UserMessage = AppMessages.RegisteredMessage;
+                    MessageColor = Colors.Green;
+                    // כאן ניתן להוסיף ניווט לדף הבא
+                }
+                else
+                {
+                    // במקרה של כישלון
+                    UserMessage = AppMessages.RegisterErrorMessage;
+                    MessageColor = Colors.Red;
+                    MessageIsVisible = true;
+                }
+               
             }
-            else
+            catch (Exception ex)
             {
-                // במקרה של כישלון
-                LoginMessage = AppMessages.LoginErrorMessage;
+                UserMessage = ex.Message;//AppMessages.RegisterErrorMessage;
+                MessageIsVisible = true;
                 MessageColor = Colors.Red;
             }
-            IsBusy = false; // מסיים את מצב "עסוק"
+            finally
+            {
+                IsBusy = false; // מסיים את מצב "עסוק"
+            }
         }
 
 

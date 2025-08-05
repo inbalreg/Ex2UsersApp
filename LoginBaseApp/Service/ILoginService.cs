@@ -27,7 +27,7 @@ namespace LoginBaseApp.Service
 		/// <param name="username">The username for the new user. Cannot be null or empty.</param>
 		/// <param name="password">The password for the new user. Cannot be null or empty.</param>
 		/// <returns><see langword="true"/> if the registration is successful; otherwise, <see langword="false"/>.</returns>
-		public bool Register(string name, string username, string password, string email, string phoneNum, string date);
+		public bool Register(string name, string username, string password, string email, string phoneNum, DateTime date);
 
         /// <summary>
         /// Retrieves a user by their username.

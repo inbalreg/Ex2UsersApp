@@ -66,9 +66,9 @@ public class User
 		get { return email.Email; }
 		set
 		{
-			if (email.Email == null)
-				email = new EmailAddress(value);
-			else email.Email = value;
+				if (email == null)
+					email = new EmailAddress(value);
+				else email.Email = value;
 		}
     }
 
@@ -83,7 +83,26 @@ public class User
 			phoneNum = value;
 		}
     }
-  
 
+	private DateTime birthDate;
+
+	public DateTime BirthDate
+    {
+		get { return birthDate; }
+		set { birthDate = value; }
+	}
+
+    public User(string name, string username,string password, string emailStr, string phoneNum, DateTime birthDate)
+    {
+        Name = name;
+        Username = username;
+        Password = password;
+        Email = emailStr;
+        PhoneNum = phoneNum;
+		//if(birthDate != null)
+		BirthDate = (DateTime)birthDate;
+    }
+
+	public User() { }
     //string name, string username, string password, string email, string phoneNum, Date date
 }
