@@ -31,22 +31,12 @@
                     Text="הרשמה"
                     TextColor="Snow"
                     VerticalOptions="Center" />
-
-
-                <Label
-                    FontAttributes="Bold"
-                    FontSize="32"
-                    HorizontalOptions="Center"
-                    IsVisible="{Binding MessageIsVisible}"
-                    Text="{Binding UserMessage}"
-                    TextColor="{Binding MessageColor}" />
-
                 <Image
-                    Aspect="Center"
-                    HeightRequest="48"
-                    Source="dog1.jpeg"
+                    Aspect="AspectFill"
+                    HeightRequest="40"
+                    Source="C:\MAUI\Projects\LoginBaseApp-master\LoginBaseApp-master\LoginBaseApp\Resources\Images\dog1.jpeg"
                     VerticalOptions="Center"
-                    WidthRequest="48" />
+                    WidthRequest="40" />
             </HorizontalStackLayout>
             <!--  שם  -->
             <Border
@@ -70,7 +60,7 @@
                 <Entry
                     FontSize="18"
                     Placeholder="שם משתמש"
-                    Text="{Binding UserName}"
+                    Text="{Binding UserNameText}"
                     TextColor="Black" />
             </Border>
 
@@ -172,14 +162,20 @@
                     </HorizontalStackLayout>
                 </FlexLayout>
             </Border>
-
+            <Label
+                FontAttributes="Bold"
+                FontSize="32"
+                HorizontalOptions="Center"
+                IsVisible="{Binding MessageIsVisible}"
+                Text="{Binding UserMessage}"
+                TextColor="{Binding MessageColor}" />
             <!--  כפתור כניסה  -->
             <Button
                 Command="{Binding RegisterCommand}"
                 CornerRadius="8"
                 FontSize="18"
                 HeightRequest="50"
-                Text="חיבור"
+                Text="הירשם"
                 TextColor="White" />
             <!--  שגיאה >
             <Label

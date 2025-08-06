@@ -27,6 +27,7 @@ namespace LoginBaseApp.ViewModels
             MessageIsVisible = false;
             SelectedDate = new DateTime(2000, 1, 1);
             errorMessage = "Test Error Message";
+            UserNameText = "";
         }
 
         private string? _userName;
@@ -40,21 +41,13 @@ namespace LoginBaseApp.ViewModels
         /// <summary>
         /// שם המשתמש המוזן על ידי המשתמש ב-UI.
         /// </summary>
-        public string? UserName
+        public string? UserNameText
         {
             get => _userName;
             set
             {
-                if (_userName != value && _userName != null)
+                if (_userName != value && value != null)
                 {
-                    if (_userName.Contains(" "))
-                    {
-                        throw new ArgumentException("Username cannot contain space!");
-                    }
-                    if (Char.IsDigit( _userName.ToCharArray()[0]))
-                    {
-                        throw new ArgumentException("Username cannot start with a digit!");
-                    }
                     _userName = value;
                     OnPropertyChanged(); // מודיע ל-UI על שינוי כדי לעדכן את התצוגה
                     (RegisterCommand as Command)?.ChangeCanExecute(); // בודק מחדש אם ניתן להפעיל את כפתור ההתחברות
@@ -161,8 +154,6 @@ namespace LoginBaseApp.ViewModels
                 // אם יום ההולדת עוד לא הגיע השנה – הפחת שנה אחת
                 if (_date.Month > today.Month || (_date.Month == today.Month && _date.Day > today.Day)) 
                     age--;
-                if (age < 18)
-                    throw new ArgumentException("Cannot register a user under 18!");
                 OnPropertyChanged();
             }
                
@@ -307,7 +298,7 @@ namespace LoginBaseApp.ViewModels
         /// <returns>אמת אם גם שם המשתמש וגם הסיסמה אינם ריקים.</returns>
         public bool CanRegister()
         {
-            return (!string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(Password));
+           return (!string.IsNullOrEmpty(UserNameText) && !string.IsNullOrEmpty(Password));
         }
 
         /// <summary>
@@ -347,9 +338,20 @@ namespace LoginBaseApp.ViewModels
             MessageIsVisible = true; // מציג את אזור הודעת המשוב
             try
             {
-
+                if (UserNameText.Contains(" "))
+                {
+                    throw new ArgumentException("Username cannot contain spaces");
+                }
+                if (Char.IsDigit(UserNameText.ToCharArray()[0]))
+                {
+                    throw new ArgumentException("Username cannot start with a digit");
+                }
+                if (Age < 18)
+                {
+                    throw new ArgumentException("Age cannot be under 18");
+                }
                 // קורא לשירות ההתחברות עם הפרטים שהוזנו
-                if (db.Register(Name!, UserName!, Password!, Email!, PhoneNum!, (DateTime)SelectedDate))
+                if (db.Register(Name!, UserNameText!, Password!, Email!, PhoneNum!, (DateTime)SelectedDate))
                 {
                     // במקרה של הצלחה
                     MessageIsVisible = true;
@@ -366,7 +368,7 @@ namespace LoginBaseApp.ViewModels
                 }
                
             }
-            catch (Exception ex)
+            catch (ArgumentException ex)
             {
                 UserMessage = ex.Message;//AppMessages.RegisterErrorMessage;
                 MessageIsVisible = true;

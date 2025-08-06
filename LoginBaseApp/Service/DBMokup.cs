@@ -56,7 +56,7 @@ namespace LoginBaseApp.Service
 					// בדיקה אם המשתמש כבר קיים
 					if (users.Any(u => u.Username == username))
 					{
-						throw new ArgumentException("User already exists with this username.", nameof(username));
+						throw new ArgumentException("User already exists with this username.");
 						//return false; // משתמש קיים, רישום נכשל
 					}
 
@@ -93,7 +93,7 @@ namespace LoginBaseApp.Service
 		/// <returns></returns>
         User? ILoginService.getUserByUsername(string username)
         {
-            User user = users.FirstOrDefault(u => u.Username == username);
+            User? user = users.FirstOrDefault(u => u.Username == username);
 			return user; // מחזיר את המשתמש אם נמצא, אחרת מחזיר null
         }
 
