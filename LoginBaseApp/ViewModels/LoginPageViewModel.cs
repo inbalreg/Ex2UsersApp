@@ -15,7 +15,7 @@ namespace LoginBaseApp.ViewModels
 	public class LoginPageViewModel : ViewModelBase
 	{
 		// שדה פרטי לשמירת שירות ההתחברות שהוזרק
-		ILoginService db;
+		IUserServices db;
 
 		private string? _userName;
 		private string? _password;
@@ -144,7 +144,7 @@ namespace LoginBaseApp.ViewModels
 		/// בנאי של ה-ViewModel.
 		/// </summary>
 		/// <param name="service">שירות ההתחברות שיוזרק באמצעות Dependency Injection.</param>
-		public LoginPageViewModel(ILoginService service)
+		public LoginPageViewModel(IUserServices service)
 		{
 			db = service;
 			// אתחול הפקודות והגדרת ערכים ראשוניים

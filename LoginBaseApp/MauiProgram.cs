@@ -24,7 +24,7 @@ namespace LoginBaseApp
             builder.Services.AddSingleton<Views.RegistrationPage>();
             builder.Services.AddTransient<ViewModels.RegistrationPageViewModel>();
 
-            builder.Services.AddSingleton<ILoginService, DBMokup>();
+            builder.Services.AddSingleton<IUserServices, DBMokup>();
 
 
 

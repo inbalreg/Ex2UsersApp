@@ -11,7 +11,7 @@ namespace LoginBaseApp.Service
 	/// <summary>
 	/// מימוש של שירות ההתחברות המדמה קריאה ל-API חיצוני.
 	/// </summary>
-	public class ApiService : ILoginService
+	public class ApiService : IUserServices
 	{
 		/// <summary>
 		/// בנאי של שירות ה-API.
@@ -35,22 +35,27 @@ namespace LoginBaseApp.Service
 			return true;
 		}
 
-        public bool Register(string username, string password)
+        //public bool Register(string username, string password)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        bool IUserServices.deleteUserByUsername(string username)
         {
             throw new NotImplementedException();
         }
 
-        bool ILoginService.deleteUserByUsername(string username)
+        User? IUserServices.getUserByUsername(string username)
         {
             throw new NotImplementedException();
         }
 
-        User? ILoginService.getUserByUsername(string username)
+        List<User> IUserServices.GetUsers()
         {
             throw new NotImplementedException();
         }
 
-        bool ILoginService.Register(string name, string username, string password, string email, string phoneNum, DateTime date)
+        bool IUserServices.Register(string name, string username, string password, string email, string phoneNum, DateTime date)
         {
             throw new NotImplementedException();
         }

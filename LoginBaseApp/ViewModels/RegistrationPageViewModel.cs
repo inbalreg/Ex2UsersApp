@@ -10,12 +10,12 @@ namespace LoginBaseApp.ViewModels
     {
 
         // שדה פרטי לשמירת שירות ההתחברות שהוזרק
-        private readonly ILoginService db;
+        private readonly IUserServices db;
         /// <summary>
         /// בנאי של ה-ViewModel.
         /// </summary>
         /// <param name="service">שירות ההתחברות שיוזרק באמצעות Dependency Injection.</param>
-        public RegistrationPageViewModel(ILoginService loginService)
+        public RegistrationPageViewModel(IUserServices loginService)
         {
             db = loginService;
             // אתחול הפקודות והגדרת ערכים ראשוניים

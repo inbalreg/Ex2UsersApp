@@ -10,7 +10,7 @@ namespace LoginBaseApp.Service
 	/// <summary>
 	/// מימוש של שירות ההתחברות המשתמש ברשימת משתמשים מקומית (Mock) לצורכי פיתוח ובדיקה.
 	/// </summary>
-	public class DBMokup : ILoginService
+	public class DBMokup : IUserServices
 	{
 		// רשימה המשמשת כמסד נתונים מדמה
 		List<Models.User> users = new List<Models.User>();
@@ -72,7 +72,7 @@ namespace LoginBaseApp.Service
             }
         }
 
-        bool ILoginService.deleteUserByUsername(string username)
+        bool IUserServices.deleteUserByUsername(string username)
         {
             User user = users.FirstOrDefault(u => u.Username == username);
             if (user == null)
@@ -91,12 +91,15 @@ namespace LoginBaseApp.Service
 		/// </summary>
 		/// <param name="username"></param>
 		/// <returns></returns>
-        User? ILoginService.getUserByUsername(string username)
+        User? IUserServices.getUserByUsername(string username)
         {
             User? user = users.FirstOrDefault(u => u.Username == username);
 			return user; // מחזיר את המשתמש אם נמצא, אחרת מחזיר null
         }
 
-    
+        List<User> IUserServices.GetUsers()
+        {
+            return users; // מחזיר את רשימת כל המשתמשים	
+        }
     }
 }
